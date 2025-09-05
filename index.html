@@ -124,6 +124,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(255,107,107,0.3);
             animation: slideInUp 1s ease-out 0.4s both;
+            cursor: pointer;
+            border: none;
         }
 
         .cta-button:hover {
@@ -292,6 +294,169 @@
             opacity: 0.9;
         }
 
+        /* Application Form Styles */
+        .application-form {
+            padding: 80px 0;
+            background: #f8f9fa;
+            display: none;
+        }
+
+        .application-form.active {
+            display: block;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .form-header h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .form-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-grid.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 0.25rem;
+        }
+
+        .checkbox-group label {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
         /* Call to Action */
         .final-cta {
             padding: 80px 0;
@@ -384,6 +549,19 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         /* Smooth scrolling */
@@ -404,6 +582,14 @@
             background: linear-gradient(45deg, #667eea, #764ba2);
             border-radius: 4px;
         }
+
+        /* Hide sections when form is active */
+        .form-active .about,
+        .form-active .highlights,
+        .form-active .stats,
+        .form-active .final-cta {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -412,10 +598,10 @@
         <nav class="container">
             <div class="logo">TechAI Foundation</div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
+                <li><a href="#home" onclick="showHome()">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#program">Program</a></li>
-                <li><a href="#partnerships">Partnerships</a></li>
+                <li><a href="#apply" onclick="showApplicationForm()">Apply</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -426,8 +612,8 @@
         <div class="container">
             <div class="hero-content">
                 <h1>TechAI Foundation Program</h1>
-                <p>Empowering youth with equal opportunities — through comprehensive training, mentorship, and real-world exposure in data and tech careers</p>
-                <a href="#program" class="cta-button">Join Our Program</a>
+                <p>Empowering youth with the same opportunities you received - comprehensive training, mentoring, and real-world exposure in data and tech careers</p>
+                <a href="#apply" class="cta-button" onclick="showApplicationForm()">Join Our Program</a>
             </div>
         </div>
     </section>
@@ -511,29 +697,193 @@
         </div>
     </section>
 
-    <!-- Partnerships -->
-    <section id="partnerships" class="highlights">
+    <!-- Application Form -->
+    <section id="apply" class="application-form">
         <div class="container">
-            <h2>Innovation Partnerships</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Connecting Talent to Opportunity</h2>
-                    <p>Through our strategic partnerships with Pwani and Nairobi Innovation Weeks, we provide participants with direct access to Kenya's most influential tech ecosystems. These partnerships ensure that our graduates have immediate pathways to internships, employment, and investor connections.</p>
-                    <p>Our network includes leading tech companies, venture capital firms, and innovation hubs across Kenya, creating a robust support system for participant success.</p>
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Apply to TechAI Foundation Program</h2>
+                    <p>Take the first step towards your tech career. Fill out the application below and we'll be in touch within 48 hours.</p>
                 </div>
-                <div class="about-image">
-                    <div class="placeholder-img">Innovation Networks</div>
+
+                <form name="techai-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <!-- Netlify form detection -->
+                    <input type="hidden" name="form-name" value="techai-application">
+                    
+                    <!-- Honeypot field for spam protection -->
+                    <p style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                    </p>
+
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="first-name">First Name *</label>
+                                <input type="text" id="first-name" name="first-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name *</label>
+                                <input type="text" id="last-name" name="last-name" required>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age">Age *</label>
+                                <input type="text" id="age" name="age" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location (City) *</label>
+                                <input type="text" id="location" name="location" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Background -->
+                    <div class="form-section">
+                        <h3>Education Background</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="education-level">Highest Education Level *</label>
+                                <select id="education-level" name="education-level" required>
+                                    <option value="">Select education level</option>
+                                    <option value="secondary">Secondary School (Form 4)</option>
+                                    <option value="diploma">Diploma</option>
+                                    <option value="bachelor">Bachelor's Degree</option>
+                                    <option value="master">Master's Degree</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-of-study">Field of Study</label>
+                                <input type="text" id="field-of-study" name="field-of-study" placeholder="e.g., Computer Science, Business, etc.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="institution">Institution Name</label>
+                            <input type="text" id="institution" name="institution" placeholder="Name of school/college/university">
+                        </div>
+                    </div>
+
+                    <!-- Tech Experience -->
+                    <div class="form-section">
+                        <h3>Technical Background</h3>
+                        <div class="form-group">
+                            <label for="programming-experience">Programming Experience *</label>
+                            <select id="programming-experience" name="programming-experience" required>
+                                <option value="">Select your level</option>
+                                <option value="none">No programming experience</option>
+                                <option value="beginner">Beginner (some online courses/tutorials)</option>
+                                <option value="intermediate">Intermediate (built some projects)</option>
+                                <option value="advanced">Advanced (professional experience)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="programming-languages">Programming Languages (if any)</label>
+                            <input type="text" id="programming-languages" name="programming-languages" placeholder="e.g., Python, JavaScript, Java (leave blank if none)">
+                        </div>
+                        <div class="form-group">
+                            <label for="tech-interests">Areas of Interest in Tech/AI *</label>
+                            <textarea id="tech-interests" name="tech-interests" placeholder="e.g., Data Science, Web Development, Machine Learning, Mobile Apps, etc." required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Motivation & Goals -->
+                    <div class="form-section">
+                        <h3>Motivation & Goals</h3>
+                        <div class="form-group">
+                            <label for="motivation">Why do you want to join the TechAI Foundation Program? *</label>
+                            <textarea id="motivation" name="motivation" placeholder="Tell us about your motivation and what you hope to achieve..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="career-goals">What are your career goals after completing the program? *</label>
+                            <textarea id="career-goals" name="career-goals" placeholder="Describe your short-term and long-term career aspirations..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="commitment">How many hours per week can you dedicate to the program? *</label>
+                            <select id="commitment" name="commitment" required>
+                                <option value="">Select time commitment</option>
+                                <option value="10-15">10-15 hours per week</option>
+                                <option value="15-25">15-25 hours per week</option>
+                                <option value="25-35">25-35 hours per week</option>
+                                <option value="35+">35+ hours per week (full-time)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h3>Additional Information</h3>
+                        <div class="form-group">
+                            <label for="portfolio">Portfolio/GitHub/LinkedIn (if any)</label>
+                            <input type="text" id="portfolio" name="portfolio" placeholder="Share links to your work or professional profiles">
+                        </div>
+                        <div class="form-group">
+                            <label for="hear-about">How did you hear about the TechAI Foundation Program? *</label>
+                            <select id="hear-about" name="hear-about" required>
+                                <option value="">Select option</option>
+                                <option value="social-media">Social Media</option>
+                                <option value="friend-referral">Friend/Colleague Referral</option>
+                                <option value="online-search">Online Search</option>
+                                <option value="university">University/School</option>
+                                <option value="tech-event">Tech Event/Conference</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="additional-info">Anything else you'd like us to know?</label>
+                            <textarea id="additional-info" name="additional-info" placeholder="Share any additional information, questions, or special circumstances..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="form-section">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the terms and conditions and understand that the TechAI Foundation Program requires dedication and commitment to succeed. *</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="updates" name="updates">
+                            <label for="updates">I would like to receive updates about the program and future opportunities via email.</label>
+                        </div>
+                    </div>
+
+                    <!-- Form Navigation -->
+                    <div class="form-navigation">
+                        <button type="button" class="btn-secondary" onclick="showHome()">← Back to Home</button>
+                        <button type="submit" class="cta-button">Submit Application</button>
+                    </div>
+                </form>
+
+                <!-- Success Message (shown after form submission) -->
+                <div class="success-message" id="success-message">
+                    <div class="success-icon">✅</div>
+                    <h3>Application Submitted Successfully!</h3>
+                    <p>Thank you for your interest in the TechAI Foundation Program. We've received your application and will review it within 48 hours.</p>
+                    <p>You'll receive an email confirmation shortly, and we'll be in touch with next steps soon.</p>
+                    <button class="cta-button" onclick="showHome()">Return to Home</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA -->
+    <!-- Call to Action -->
     <section class="final-cta">
         <div class="container">
             <h2>Ready to Transform Your Future?</h2>
             <p>Join the next generation of tech leaders and innovators. Applications are now open for our comprehensive TechAI Foundation Program.</p>
-            <a href="#contact" class="cta-button">Apply Now</a>
+            <a href="#apply" class="cta-button" onclick="showApplicationForm()">Apply Now</a>
         </div>
     </section>
 
@@ -547,14 +897,14 @@
                 </div>
                 <div class="footer-section">
                     <h3>Programs</h3>
-                    <p><a href="#">TechAI Foundation Course</a></p>
-                    <p><a href="#">Mentorship Program</a></p>
-                    <p><a href="#">Innovation Showcase</a></p>
+                    <p><a href="#program">TechAI Foundation Course</a></p>
+                    <p><a href="#program">Mentorship Program</a></p>
+                    <p><a href="#program">Innovation Showcase</a></p>
                 </div>
                 <div class="footer-section">
                     <h3>Contact</h3>
-                    <p>Email: powerbitraining254@gmail.com</p>
-                    <p>Phone: +254 746854108</p>
+                    <p>Email: infotechaifoundation@gmail.com</p>
+                    <p>Phone: +254 746 854 108</p>
                     <p>Address: Nairobi, Kenya</p>
                 </div>
             </div>
@@ -563,13 +913,30 @@
     </footer>
 
     <script>
+        // Show/hide sections
+        function showApplicationForm() {
+            document.body.classList.add('form-active');
+            document.getElementById('apply').classList.add('active');
+            document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showHome() {
+            document.body.classList.remove('form-active');
+            document.getElementById('apply').classList.remove('active');
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('onclick')) return; // Skip if has onclick handler
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
@@ -583,6 +950,19 @@
                 header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
                 header.style.backdropFilter = 'none';
             }
+        });
+
+        // Form submission handling
+        document.querySelector('form[name="techai-application"]').addEventListener('submit', function(e) {
+            // Let Netlify handle the form submission
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // The form will be submitted normally to Netlify
+            // After submission, Netlify will redirect or show success
         });
 
         // Intersection Observer for animations
@@ -602,6 +982,34 @@
         // Observe all cards
         document.querySelectorAll('.highlight-card, .stat-item').forEach(card => {
             observer.observe(card);
+        });
+
+        // Form validation
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#dc3545';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e1e5e9';
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Add real-time validation
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.style.borderColor = '#dc3545';
+                } else {
+                    this.style.borderColor = '#e1e5e9';
+                }
+            });
         });
     </script>
 </body>
