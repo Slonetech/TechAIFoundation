@@ -1,1 +1,1 @@
-# TechAIFoundation
+# TechAIHub
