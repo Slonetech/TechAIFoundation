@@ -1,0 +1,6 @@
+# Netlify redirects for single-page application
+# This ensures all routes are handled by index.html
+/*    /index.html   200
+
+# Handle form submissions
+/thank-you    /index.html?success=true    200

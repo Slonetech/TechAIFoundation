@@ -706,7 +706,7 @@
                     <p>Take the first step towards your tech career. Fill out the application below and we'll be in touch within 48 hours.</p>
                 </div>
 
-                <form name="techai-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                <form name="techai-application" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
                     <!-- Netlify form detection -->
                     <input type="hidden" name="form-name" value="techai-application">
                     
@@ -954,16 +954,29 @@
 
         // Form submission handling
         document.querySelector('form[name="techai-application"]').addEventListener('submit', function(e) {
-            // Let Netlify handle the form submission
             // Show loading state
             const submitBtn = document.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
             
+            // Validate form before submission
+            if (!validateForm()) {
+                e.preventDefault();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            // Let Netlify handle the form submission
             // The form will be submitted normally to Netlify
-            // After submission, Netlify will redirect or show success
         });
+
+        // Handle form submission success (Netlify will redirect to success page)
+        // Check if we're on a success page (URL contains success parameters)
+        if (window.location.search.includes('success=true') || window.location.hash.includes('success')) {
+            showSuccessMessage();
+        }
 
         // Intersection Observer for animations
         const observerOptions = {
@@ -1011,6 +1024,17 @@
                 }
             });
         });
+
+        // Function to show success message
+        function showSuccessMessage() {
+            const form = document.querySelector('form[name="techai-application"]');
+            const successMessage = document.getElementById('success-message');
+            
+            if (form && successMessage) {
+                form.style.display = 'none';
+                successMessage.classList.add('show');
+            }
+        }
     </script>
 </body>
 </html>
