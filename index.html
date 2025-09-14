@@ -706,7 +706,7 @@
                     <p>Take the first step towards your tech career. Fill out the application below and we'll be in touch within 48 hours.</p>
                 </div>
 
-                <form name="techai-application" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+                <form name="techai-application" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field">
                     <!-- Netlify form detection -->
                     <input type="hidden" name="form-name" value="techai-application">
                     
@@ -968,13 +968,25 @@
                 return;
             }
             
-            // Let Netlify handle the form submission
+            // Check if we're in local development
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                e.preventDefault();
+                // Simulate form submission for local testing
+                setTimeout(() => {
+                    showSuccessMessage();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+                return;
+            }
+            
+            // Let Netlify handle the form submission in production
             // The form will be submitted normally to Netlify
         });
 
         // Handle form submission success (Netlify will redirect to success page)
         // Check if we're on a success page (URL contains success parameters)
-        if (window.location.search.includes('success=true') || window.location.hash.includes('success')) {
+        if (window.location.pathname === '/thank-you' || window.location.search.includes('success=true') || window.location.hash.includes('success')) {
             showSuccessMessage();
         }
 
@@ -1005,11 +1017,24 @@
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
                     field.style.borderColor = '#dc3545';
+                    field.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
                     isValid = false;
                 } else {
                     field.style.borderColor = '#e1e5e9';
+                    field.style.boxShadow = 'none';
                 }
             });
+            
+            // Additional email validation
+            const emailField = document.getElementById('email');
+            if (emailField && emailField.value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailField.value)) {
+                    emailField.style.borderColor = '#dc3545';
+                    emailField.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
+                    isValid = false;
+                }
+            }
             
             return isValid;
         }
@@ -1019,8 +1044,22 @@
             field.addEventListener('blur', function() {
                 if (this.hasAttribute('required') && !this.value.trim()) {
                     this.style.borderColor = '#dc3545';
+                    this.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
                 } else {
                     this.style.borderColor = '#e1e5e9';
+                    this.style.boxShadow = 'none';
+                }
+                
+                // Email validation on blur
+                if (this.type === 'email' && this.value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(this.value)) {
+                        this.style.borderColor = '#dc3545';
+                        this.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
+                    } else {
+                        this.style.borderColor = '#e1e5e9';
+                        this.style.boxShadow = 'none';
+                    }
                 }
             });
         });
