@@ -1,6 +1,5 @@
-# Netlify redirects for single-page application
-# This ensures all routes are handled by index.html
-/*    /index.html   200
-
-# Handle thank you page
+# Handle thank you page first (more specific route)
 /thank-you    /thank-you.html    200
+
+# Catch all other routes and serve index.html
+/*    /index.html   200

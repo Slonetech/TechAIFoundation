@@ -706,7 +706,7 @@
                     <p>Take the first step towards your tech career. Fill out the application below and we'll be in touch within 48 hours.</p>
                 </div>
 
-                <form name="techai-application" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field">
+                <form name="techai-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
                     <!-- Netlify form detection -->
                     <input type="hidden" name="form-name" value="techai-application">
                     
@@ -980,8 +980,8 @@
                 return;
             }
             
-            // Let Netlify handle the form submission in production
-            // The form will be submitted normally to Netlify
+            // For Netlify, let the form submit naturally
+            // Netlify will handle the submission and redirect
         });
 
         // Handle form submission success (Netlify will redirect to success page)
